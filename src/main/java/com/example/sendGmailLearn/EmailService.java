@@ -9,7 +9,7 @@ import jakarta.mail.internet.MimeMessage;  // Используйте Jakarta
 
 @Service
 public class EmailService {
-    //add some code
+    //add some code 1
     private final JavaMailSender mailSender;
 
     public EmailService(JavaMailSender mailSender) {
