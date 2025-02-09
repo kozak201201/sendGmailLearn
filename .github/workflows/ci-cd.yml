@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
       - name: SSH to server, pull latest changes and restart container
         uses: appleboy/ssh-action@v0.1.4
         with:
@@ -20,10 +26,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}  # Имя пользователя для SSH
           key: ${{ secrets.SERVER_SSH_KEY }}  # Приватный SSH ключ
           script: |
-            # Переходим в директорию с приложением
             cd /home/ubuntu/sendGmailLearn
-            # Выполняем git pull для получения последних изменений
-            git pull origin master  # Убедитесь, что указываете правильную ветку
-            # Перезапускаем контейнер
+            git pull origin master
             docker-compose down
             docker-compose up -d
