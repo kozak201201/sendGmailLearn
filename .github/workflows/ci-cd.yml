@@ -1,0 +1,29 @@
+#name: CI/CD Pipeline
+#
+#on:
+#  push:
+#    branches:
+#      - master  # или другая ветка, на которую происходят изменения
+#
+#jobs:
+#  deploy:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: SSH to server, pull latest changes and restart container
+#        uses: appleboy/ssh-action@v0.1.4
+#        with:
+#          host: ${{ secrets.SERVER_IP }}  # IP сервера
+#          username: ${{ secrets.SERVER_USER }}  # Имя пользователя для SSH
+#          key: ${{ secrets.SERVER_SSH_KEY }}  # Приватный SSH ключ
+#          script: |
+#            # Переходим в директорию с приложением
+#            cd /path/to/your/app
+#            # Выполняем git pull для получения последних изменений
+#            git pull origin main  # Убедитесь, что указываете правильную ветку
+#            # Перезапускаем контейнер
+#            docker-compose down
+#            docker-compose up -d
